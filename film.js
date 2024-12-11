@@ -104,6 +104,27 @@ const filmy = [
 		premiera: '2022-12-24',
 	},
 ]
+
+
+document.addEventListener("DOMContentLoaded", function () {
+	const filmId = location.hash.substring(1);
+	 const film = filmy.find(f => f.id === filmId);
+
+	 if (film) {
+	   const detailFilmu = document.querySelector('#detail-filmu');
+   
+	   detailFilmu.querySelector('.card-title').textContent = film.nazev;
+	   detailFilmu.querySelector('.card-text').textContent = film.popis;
+	   detailFilmu.querySelector('img').src = film.plakat.url;
+	   detailFilmu.querySelector('img').alt = film.nazev;
+	 } else {
+	
+	   console.error('Film nebyl nalezen.');
+	 }
+   });
+
+
+
 document.addEventListener("DOMContentLoaded", function () {
 	const noteForm = document.querySelector('#note-form');
 	const messageInput = document.querySelector('#message-input');
