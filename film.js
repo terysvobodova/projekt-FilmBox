@@ -104,3 +104,33 @@ const filmy = [
 		premiera: '2022-12-24',
 	},
 ]
+document.addEventListener("DOMContentLoaded", function () {
+	const noteForm = document.querySelector('#note-form');
+	const messageInput = document.querySelector('#message-input');
+	const termsCheckbox = document.querySelector('#terms-checkbox');
+	
+	noteForm.addEventListener('submit', function (e) {
+	  e.preventDefault(); 
+	  messageInput.classList.remove('is-invalid');
+	  termsCheckbox.classList.remove('is-invalid');
+  
+	  if (messageInput.value.trim() === "") {
+		messageInput.classList.add('is-invalid'); 
+		messageInput.focus("");
+		return; 
+	  }
+	  if (!termsCheckbox.checked) {
+		termsCheckbox.classList.add('is-invalid'); 
+		return; 
+	  }
+  
+	  const cardBody = noteForm.closest('.card-body');
+	  const noteText = messageInput.value.trim();
+  
+	  const noteParagraph = document.createElement('p');
+	  noteParagraph.classList.add('card-text');
+	  noteParagraph.textContent = noteText;
+
+	  cardBody.replaceChild(noteParagraph, noteForm);
+	});
+  });
