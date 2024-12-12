@@ -118,6 +118,7 @@ const filmy = [
 	}
 ]
 
+
 const seznamFilmu = document.querySelector('#seznam-filmu');
 
 seznamFilmu.innerHTML = '';

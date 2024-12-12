@@ -105,7 +105,7 @@ const filmy = [
 	},
 ]
 
-
+//detail
 document.addEventListener("DOMContentLoaded", function () {
 	const filmId = location.hash.substring(1);
 	 const film = filmy.find(f => f.id === filmId);
@@ -123,8 +123,7 @@ document.addEventListener("DOMContentLoaded", function () {
 	 }
    });
 
-
-
+//hodnocecní
 document.addEventListener("DOMContentLoaded", function () {
 	const noteForm = document.querySelector('#note-form');
 	const messageInput = document.querySelector('#message-input');
@@ -153,5 +152,96 @@ document.addEventListener("DOMContentLoaded", function () {
 	  noteParagraph.textContent = noteText;
 
 	  cardBody.replaceChild(noteParagraph, noteForm);
+	});
+  });
+
+ //přehráváč 
+  document.addEventListener("DOMContentLoaded", function () {
+	const prehravac = document.querySelector('#prehravac');
+	if (prehravac) {
+	  const playButton = prehravac.querySelector('.play');
+	  const pauseButton = prehravac.querySelector('.pause');
+	  const video = prehravac.querySelector('video');
+	  const currentTimeDisplay = prehravac.querySelector('.current-time');
+
+	  function formatTime(seconds) {
+		const minutes = Math.floor(seconds / 60);
+		const remainingSeconds = Math.floor(seconds % 60);
+		return `${minutes < 10 ? '0' + minutes : minutes}:${remainingSeconds < 10 ? '0' + remainingSeconds : remainingSeconds}`;
+	  }
+  
+	  playButton.addEventListener('click', function () {
+		video.play();
+	  });
+
+	  video.addEventListener('playing', function () {
+		prehravac.classList.add('playing');
+		playButton.style.display = 'none';
+		pauseButton.style.display = 'inline-block';
+	  });
+  
+	  pauseButton.addEventListener('click', function () {
+		video.pause();
+	  });
+  
+	  video.addEventListener('pause', function () {
+		prehravac.classList.remove('playing');
+		playButton.style.display = 'inline-block';
+		pauseButton.style.display = 'none';
+	  });
+  
+	  video.addEventListener('timeupdate', function () {
+		const currentTime = video.currentTime;
+		currentTimeDisplay.textContent = formatTime(currentTime);
+	  });
+
+	  document.addEventListener('keydown', function (event) {
+		if (
+		  event.code === 'Space' &&
+		  event.target.tagName !== 'TEXTAREA' &&
+		  event.target.tagName !== 'INPUT' &&
+		  event.target.tagName !== 'BUTTON'
+		) {
+		  event.preventDefault(); 
+		  if (video.paused) {
+			video.play();
+		  } else {
+			video.pause();
+		  }
+		}
+	  });
+	}
+  });
+  //hvezdicky
+  document.addEventListener("DOMContentLoaded", function () {
+	let lastSelectedRating = 0;  
+	function highlightStars(number) {
+	  const stars = document.querySelectorAll('.fa-star');
+	  stars.forEach((star, index) => {
+		if (index < number) {
+		  star.classList.remove('far');
+		  star.classList.add('fas');
+		} else {
+		  star.classList.remove('fas');
+		  star.classList.add('far');
+		}
+	  });
+	}
+  
+	const stars = document.querySelectorAll('.fa-star');
+	
+	stars.forEach((star, index) => {
+	  star.addEventListener('click', function () {
+		lastSelectedRating = index + 1; 
+		highlightStars(lastSelectedRating); 
+	  });
+  
+	  // Přejíždění myší
+	  star.addEventListener('mouseenter', function () {
+		highlightStars(index + 1); 
+	  });
+	  star.addEventListener('mouseleave', function () {
+		highlightStars(lastSelectedRating);
+	  });
 	});
   });
